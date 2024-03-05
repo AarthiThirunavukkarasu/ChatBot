@@ -79,3 +79,39 @@ const calculateSmsLength = (text) => {
   }
   return length;
 };
+
+
+
+
+
+const Preview = ({ smsText, smsParts }) => {
+  const maxLength = 160; // Maximum characters per SMS part
+  const smsArray = [];
+
+  let startIndex = 0;
+  let endIndex = 0;
+
+  for (let i = 0; i < smsParts; i++) {
+    endIndex = startIndex + maxLength;
+
+    // Adjust endIndex to avoid splitting words
+    while (endIndex < smsText.length && smsText[endIndex] !== ' ' && smsText[endIndex - 1] !== ' ') {
+      endIndex--;
+    }
+
+    const part = smsText.substring(startIndex, endIndex).trim();
+    smsArray.push(part);
+
+    // Update startIndex for next iteration
+    startIndex = endIndex + 1; // Update startIndex to start after the space
+  }
+
+  return (
+    <div>
+      <h2>Preview</h2>
+      {smsArray.map((part, index) => (
+        <p key={index}>{part}</p>
+      ))}
+    </div>
+  );
+};
