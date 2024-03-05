@@ -115,3 +115,38 @@ const Preview = ({ smsText, smsParts }) => {
     </div>
   );
 };
+
+
+
+const Preview = ({ smsText, smsParts }) => {
+  const maxLength = 160; // Maximum characters per SMS part
+  const smsArray = [];
+
+  let remainingText = smsText;
+
+  for (let i = 0; i < smsParts; i++) {
+    let endIndex = maxLength;
+
+    // Adjust endIndex to avoid splitting words
+    if (endIndex < remainingText.length && remainingText[endIndex] !== ' ' && remainingText[endIndex - 1] !== ' ') {
+      while (endIndex > 0 && remainingText[endIndex] !== ' ') {
+        endIndex--;
+      }
+    }
+
+    const part = remainingText.substring(0, endIndex).trim();
+    smsArray.push(part);
+
+    // Update remainingText for next iteration
+    remainingText = remainingText.substring(endIndex).trim();
+  }
+
+  return (
+    <div>
+      <h2>Preview</h2>
+      {smsArray.map((part, index) => (
+        <p key={index}>{part}</p>
+      ))}
+    </div>
+  );
+};
