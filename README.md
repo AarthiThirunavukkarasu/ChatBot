@@ -53,3 +53,9 @@ const Preview = ({ smsText, smsParts }) => {
 };
 
 export default SmsCalculator;
+for (let i = 0; i < smsParts; i++) {
+    const startIndex = i * maxLength;
+    const endIndex = Math.min((i + 1) * maxLength, smsText.length);
+    const part = smsText.substring(startIndex, endIndex);
+    smsArray.push(part);
+  }
