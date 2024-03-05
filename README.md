@@ -150,3 +150,46 @@ const Preview = ({ smsText, smsParts }) => {
     </div>
   );
 };
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+import { smsLength } from 'sms-length';
+
+const SmsCalculator = () => {
+  const [smsText, setSmsText] = useState('');
+  const [lengthInfo, setLengthInfo] = useState(null);
+
+  const handleInputChange = (e) => {
+    const text = e.target.value;
+    setSmsText(text);
+    const info = smsLength(text);
+    setLengthInfo(info);
+  };
+
+  return (
+    <div>
+      <h1>SMS Length Calculator</h1>
+      <textarea value={smsText} onChange={handleInputChange} />
+      {lengthInfo && (
+        <div>
+          <p>Characters: {lengthInfo.length}</p>
+          <p>Parts: {lengthInfo.parts}</p>
+          <p>Characters Left: {lengthInfo.remaining}</p>
+          <h2>Preview</h2>
+          {lengthInfo.segments.map((segment, index) => (
+            <p key={index}>{segment.text}</p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SmsCalculator;
